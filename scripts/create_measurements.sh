@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 MEASUREMENTS_FILE="measurements.txt"
 NUM_MEASUREMENTS=${1:-1000}
 

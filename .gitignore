@@ -1,2 +1,5 @@
-measurements.txt
+# Measurement files
 measurements*.txt
+
+# Average output files
+average*.txt
