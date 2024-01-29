@@ -3,16 +3,23 @@
 MEASUREMENTS_FILE="measurements.txt"
 NUM_MEASUREMENTS=${1:-1000}
 
-if ! [ -f $MEASUREMENTS_FILE ]; then
-  echo "Measurements file does not exist, creating."
+if ! [ -f $MEASUREMENTS_FILE ];
+then
+  echo "INFO: Measurements file [$MEASUREMENTS_FILE] does not exist, creating."
   touch $MEASUREMENTS_FILE
+else
+  echo "WARN: Measurements file [$MEASUREMENTS_FILE] already exists, it will be overwritten."
 fi
 
+# Run docker container with JDK 21 to compile and run the `CreateMeasurements.java` file
 docker run \
   --rm \
   -it \
   --workdir /scripts \
-  -v "$PWD/$MEASUREMENTS_FILE:/scripts/$MEASUREMENTS_FILE" \
-  -v "$PWD/scripts/CreateMeasurements.java:/scripts/CreateMeasurements.java" \
+  -v "$PWD/$MEASUREMENTS_FILE:/scripts/$MEASUREMENTS_FILE:rw" \
+  -v "$PWD/scripts/CreateMeasurements.java:/scripts/CreateMeasurements.java:ro" \
   amazoncorretto:21 \
   bash -c "javac CreateMeasurements.java && java CreateMeasurements.java ${NUM_MEASUREMENTS}"
+
+# Display measurements file size
+du -sh $MEASUREMENTS_FILE
