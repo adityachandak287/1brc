@@ -9,9 +9,8 @@ do
   hyperfine \
     --min-runs 1 \
     --warmup 1 \
-    --parameter-list implementation brute_force.py \
     --parameter-list input_file $measurements_file \
-    -n '{implementation} {input_file}' \
-    'python python/{implementation} {input_file}'
+    -n 'python bruteforce {input_file}' 'python python/brute_force.py {input_file}' \
+    -n 'bun bruteforce {input_file}' 'bun run node/brute-force.ts {input_file}'
 
 done

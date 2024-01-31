@@ -1,0 +1,17 @@
+{
+  "name": "1brc",
+  "version": "1.0.0",
+  "description": "Learn more: https://github.com/gunnarmorling/1brc",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "volta": {
+    "node": "20.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.14"
+  }
+}
