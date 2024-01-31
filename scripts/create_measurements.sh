@@ -2,8 +2,8 @@
 
 set -e
 
-MEASUREMENTS_FILE="measurements.txt"
 NUM_MEASUREMENTS=${1:-1000}
+MEASUREMENTS_FILE="measurements-$NUM_MEASUREMENTS.txt"
 
 if ! [ -f $MEASUREMENTS_FILE ];
 then
@@ -18,7 +18,7 @@ docker run \
   --rm \
   -it \
   --workdir /scripts \
-  -v "$PWD/$MEASUREMENTS_FILE:/scripts/$MEASUREMENTS_FILE:rw" \
+  -v "$PWD/$MEASUREMENTS_FILE:/scripts/measurements.txt:rw" \
   -v "$PWD/scripts/CreateMeasurements.java:/scripts/CreateMeasurements.java:ro" \
   amazoncorretto:21 \
   bash -c "javac CreateMeasurements.java && java CreateMeasurements.java ${NUM_MEASUREMENTS}"

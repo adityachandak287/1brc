@@ -2,8 +2,11 @@
 
 set -e
 
-MEASUREMENTS_FILE="measurements.txt"
+MEASUREMENTS_FILE=${1:-measurements-1000.txt}
 OUTPUT_FILE="average_baseline.txt"
+
+echo "INFO: Running calculation for $MEASUREMENTS_FILE"
+echo "INFO: Output will be written to $OUTPUT_FILE"
 
 if ! [ -f $MEASUREMENTS_FILE ];
 then
@@ -16,9 +19,9 @@ docker run \
   --rm \
   -it \
   --workdir /scripts \
-  -v "$PWD/$MEASUREMENTS_FILE:/scripts/$MEASUREMENTS_FILE:rw" \
+  -v "$PWD/$MEASUREMENTS_FILE:/scripts/measurements.txt:rw" \
   -v "$PWD/scripts/CalculateAverage_baseline_original_rounding.java:/scripts/CalculateAverage_baseline_original_rounding.java:ro" \
   amazoncorretto:21 \
   bash -c "javac CalculateAverage_baseline_original_rounding.java && java CalculateAverage_baseline_original_rounding.java" > $OUTPUT_FILE
 
-echo "Average calculation output saved to $OUTPUT_FILE"
+echo "INFO: Average calculation output saved to $OUTPUT_FILE"
