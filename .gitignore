@@ -4,6 +4,9 @@ measurements*.txt
 # Average output files
 average*.txt
 
+*.log
+*.csv
+
 # ======== Python ========
 # Byte-compiled / optimized / DLL files
 __pycache__/
