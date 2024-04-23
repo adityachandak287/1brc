@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Learn more: https://github.com/gunnarmorling/1brc",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,6 +13,8 @@
     "node": "20.11.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.14"
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^20.11.14",
+    "typescript": "^5.4.5"
   }
 }

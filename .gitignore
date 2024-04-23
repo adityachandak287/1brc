@@ -4,6 +4,9 @@ measurements*.txt
 # Average output files
 average*.txt
 
+# Hyperfine comparison markdown table outputs
+comparison_*.md
+
 *.log
 *.csv
 
@@ -53,3 +56,5 @@ venv.bak/
 
 # ======== Node ========
 node_modules/
+node/dist/
+.clinic/
