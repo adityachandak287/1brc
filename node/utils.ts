@@ -3,7 +3,7 @@ if (process.argv.length <= 2) {
   process.exit(0);
 }
 
-export const filePath = process.argv.at(2) as string;
+export const filePath = process.argv[2] as string;
 
 // https://realpython.com/python-rounding/#rounding-half-up
 export const roundHalfUp = (n: number, decimals = 1) => {
