@@ -16,7 +16,6 @@ fi
 # Run docker container with JDK 21 to compile and run the `CreateMeasurements.java` file
 docker run \
   --rm \
-  -it \
   --workdir /scripts \
   -v "$PWD/$MEASUREMENTS_FILE:/scripts/measurements.txt:rw" \
   -v "$PWD/scripts/CreateMeasurements.java:/scripts/CreateMeasurements.java:ro" \
