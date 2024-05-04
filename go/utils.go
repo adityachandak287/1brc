@@ -3,7 +3,7 @@ package main
 import "math"
 
 // https://realpython.com/python-rounding/#rounding-half-up
-func roundHalfUp(n float32, decimals int) float32 {
+func roundHalfUp(n float64, decimals int) float64 {
 	mult := math.Pow(10, float64(decimals))
-	return float32(math.Floor(float64(n)*mult+0.5) / mult)
+	return math.Floor(n*mult+0.5) / mult
 }

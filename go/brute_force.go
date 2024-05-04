@@ -11,16 +11,13 @@ import (
 	"strings"
 )
 
-type City = string
-type Reading = float32
-
 type Results struct {
-	readings map[City][]Reading
+	readings map[string][]float64
 }
 
 func NewResult() Results {
 	return Results{
-		readings: map[string][]float32{},
+		readings: map[string][]float64{},
 	}
 }
 
@@ -29,7 +26,7 @@ func (res *Results) record(line string) {
 
 	current, ok := res.readings[city]
 	if !ok {
-		current = []Reading{reading}
+		current = []float64{reading}
 	} else {
 		current = append(current, reading)
 	}
@@ -37,7 +34,7 @@ func (res *Results) record(line string) {
 }
 
 func (res *Results) process() string {
-	var cities []City
+	var cities []string
 	for city := range res.readings {
 		cities = append(cities, city)
 	}
@@ -48,11 +45,10 @@ func (res *Results) process() string {
 	for idx, city := range cities {
 		readings := res.readings[city]
 
-		min := float32(math.MaxFloat32)
-		// max := -1 * float32(math.MaxFloat32)
-		max := -1 * float32(math.MaxFloat32)
+		min := math.MaxFloat64
+		max := -1 * math.MaxFloat64
 
-		total := float32(0)
+		total := float64(0)
 		count := len(readings)
 
 		for _, reading := range readings {
@@ -65,7 +61,7 @@ func (res *Results) process() string {
 
 			total += reading
 		}
-		avg := total / float32(count)
+		avg := total / float64(count)
 
 		min = roundHalfUp(min, 1)
 		max = roundHalfUp(max, 1)
@@ -78,7 +74,7 @@ func (res *Results) process() string {
 
 }
 
-func parseLine(line string) (City, Reading) {
+func parseLine(line string) (string, float64) {
 	parts := strings.SplitN(line, ";", 2)
 
 	if len(parts) != 2 {
@@ -88,11 +84,10 @@ func parseLine(line string) (City, Reading) {
 	city := parts[0]
 	readingStr := parts[1]
 
-	value, err := strconv.ParseFloat(readingStr, 32)
+	reading, err := strconv.ParseFloat(readingStr, 64)
 	if err != nil {
 		log.Panic("Could not parse string into float", readingStr)
 	}
-	reading := float32(value)
 
 	return city, reading
 }
