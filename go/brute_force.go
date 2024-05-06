@@ -6,6 +6,7 @@ import (
 	"log"
 	"math"
 	"os"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -83,6 +84,26 @@ func parseLine(line string) (string, float64) {
 
 	city := parts[0]
 	readingStr := parts[1]
+
+	reading, err := strconv.ParseFloat(readingStr, 64)
+	if err != nil {
+		log.Panic("Could not parse string into float", readingStr)
+	}
+
+	return city, reading
+}
+
+var linePattern = regexp.MustCompile(`(.+);([-]?\d{1,2}\.\d)`)
+
+func parseLineRegex(line string) (string, float64) {
+	parts := linePattern.FindStringSubmatch(line)
+
+	if len(parts) != 3 {
+		log.Panic("Failed to split line", parts)
+	}
+
+	city := parts[1]
+	readingStr := parts[2]
 
 	reading, err := strconv.ParseFloat(readingStr, 64)
 	if err != nil {

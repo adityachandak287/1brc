@@ -63,3 +63,4 @@ node/dist/
 *.prof
 *.out
 go/1brc
+go/*.test
