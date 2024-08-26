@@ -6,6 +6,7 @@ average*.txt
 
 # Hyperfine comparison markdown table outputs
 comparison_*.md
+!results/*.md
 
 *.log
 *.csv
@@ -53,6 +54,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.python-version
 
 # ======== Node ========
 node_modules/
