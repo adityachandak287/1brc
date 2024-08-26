@@ -8,11 +8,12 @@ import (
 	"runtime/trace"
 
 	bruteforce "github.com/adityachandak287/1brc/go/brute_force"
+	track_aggregates "github.com/adityachandak287/1brc/go/track_aggregates"
 )
 
 func main() {
 	inputFile := flag.String("file", "", "Measurements input file")
-	impl := flag.String("impl", "brute_force", "Implementation to use [brute_force]")
+	impl := flag.String("impl", "", "Implementation to use [brute_force,track_aggregates]")
 	cpuprofile := flag.String("cpuprofile", "", "Write cpu profile to file")
 	tracefile := flag.String("trace", "", "Write traces to file")
 
@@ -53,6 +54,8 @@ func main() {
 	switch *impl {
 	case "brute_force":
 		bruteforce.Solution(*inputFile)
+	case "track_aggregates":
+		track_aggregates.Solution(*inputFile)
 	default:
 		log.Panic("Invalid input for impl!")
 	}
