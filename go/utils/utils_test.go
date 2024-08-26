@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"testing"
@@ -32,7 +32,7 @@ func TestParseLine(t *testing.T) {
 	testData := getParseLineTestData()
 
 	for _, data := range testData {
-		city, reading := parseLine(data.input)
+		city, reading := ParseLine(data.input)
 
 		require.Equal(t, city, data.city, "City not parsed correctly")
 		require.Equal(t, reading, data.reading, "Reading not parsed correctly")
@@ -44,7 +44,7 @@ func TestParseLineRegex(t *testing.T) {
 	testData := getParseLineTestData()
 
 	for _, data := range testData {
-		city, reading := parseLineRegex(data.input)
+		city, reading := ParseLineRegex(data.input)
 
 		require.Equal(t, city, data.city, "City not parsed correctly")
 		require.Equal(t, reading, data.reading, "Reading not parsed correctly")
@@ -57,7 +57,7 @@ func BenchmarkParseLine(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		for _, data := range testData {
-			parseLine(data.input)
+			ParseLine(data.input)
 		}
 	}
 }
@@ -67,7 +67,7 @@ func BenchmarkParseLineRegex(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		for _, data := range testData {
-			parseLineRegex(data.input)
+			ParseLineRegex(data.input)
 		}
 	}
 }

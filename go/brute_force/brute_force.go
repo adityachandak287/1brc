@@ -1,4 +1,4 @@
-package main
+package bruteforce
 
 import (
 	"bufio"
@@ -6,10 +6,10 @@ import (
 	"log"
 	"math"
 	"os"
-	"regexp"
 	"sort"
-	"strconv"
 	"strings"
+
+	"github.com/adityachandak287/1brc/go/utils"
 )
 
 type Results struct {
@@ -23,7 +23,7 @@ func NewResult() Results {
 }
 
 func (res *Results) record(line string) {
-	city, reading := parseLine(line)
+	city, reading := utils.ParseLine(line)
 
 	current, ok := res.readings[city]
 	if !ok {
@@ -64,56 +64,17 @@ func (res *Results) process() string {
 		}
 		avg := total / float64(count)
 
-		min = roundHalfUp(min, 1)
-		max = roundHalfUp(max, 1)
-		avg = roundHalfUp(avg, 1)
+		min = utils.RoundHalfUp(min, 1)
+		max = utils.RoundHalfUp(max, 1)
+		avg = utils.RoundHalfUp(avg, 1)
 
 		output[idx] = fmt.Sprintf("%s=%.1f/%.1f/%.1f", city, min, avg, max)
 	}
 
 	return fmt.Sprintf("{%s}", strings.Join(output, ", "))
-
 }
 
-func parseLine(line string) (string, float64) {
-	parts := strings.SplitN(line, ";", 2)
-
-	if len(parts) != 2 {
-		log.Panic("Failed to split line", parts)
-	}
-
-	city := parts[0]
-	readingStr := parts[1]
-
-	reading, err := strconv.ParseFloat(readingStr, 64)
-	if err != nil {
-		log.Panic("Could not parse string into float", readingStr)
-	}
-
-	return city, reading
-}
-
-var linePattern = regexp.MustCompile(`(.+);([-]?\d{1,2}\.\d)`)
-
-func parseLineRegex(line string) (string, float64) {
-	parts := linePattern.FindStringSubmatch(line)
-
-	if len(parts) != 3 {
-		log.Panic("Failed to split line", parts)
-	}
-
-	city := parts[1]
-	readingStr := parts[2]
-
-	reading, err := strconv.ParseFloat(readingStr, 64)
-	if err != nil {
-		log.Panic("Could not parse string into float", readingStr)
-	}
-
-	return city, reading
-}
-
-func BruteForceSolution(inputFile string) {
+func Solution(inputFile string) {
 	file, err := os.Open(inputFile)
 	if err != nil {
 		log.Fatal(err)

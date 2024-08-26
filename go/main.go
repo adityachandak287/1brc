@@ -6,6 +6,8 @@ import (
 	"os"
 	"runtime/pprof"
 	"runtime/trace"
+
+	bruteforce "github.com/adityachandak287/1brc/go/brute_force"
 )
 
 func main() {
@@ -50,7 +52,7 @@ func main() {
 
 	switch *impl {
 	case "brute_force":
-		BruteForceSolution(*inputFile)
+		bruteforce.Solution(*inputFile)
 	default:
 		log.Panic("Invalid input for impl!")
 	}
