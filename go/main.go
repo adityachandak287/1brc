@@ -13,7 +13,7 @@ import (
 
 func main() {
 	inputFile := flag.String("file", "", "Measurements input file")
-	impl := flag.String("impl", "", "Implementation to use [brute_force,track_aggregates]")
+	impl := flag.String("impl", "", "Implementation to use [brute_force, track_aggregates, track_aggregates_v2]")
 	cpuprofile := flag.String("cpuprofile", "", "Write cpu profile to file")
 	tracefile := flag.String("trace", "", "Write traces to file")
 
