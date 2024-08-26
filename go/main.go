@@ -56,6 +56,8 @@ func main() {
 		bruteforce.Solution(*inputFile)
 	case "track_aggregates":
 		track_aggregates.Solution(*inputFile)
+	case "track_aggregates_v2":
+		track_aggregates.SolutionV2(*inputFile)
 	default:
 		log.Panic("Invalid input for impl!")
 	}

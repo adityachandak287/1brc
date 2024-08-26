@@ -92,3 +92,63 @@ func Solution(inputFile string) {
 
 	fmt.Println(results.process())
 }
+
+const WRITE_BATCH_SIZE = 1000
+
+func writer(scanner *bufio.Scanner, lineCh chan<- []string) {
+	lines := make([]string, WRITE_BATCH_SIZE)
+
+	lineIdx := 0
+	for scanner.Scan() {
+		lines[lineIdx] = scanner.Text()
+		lineIdx += 1
+		if lineIdx == WRITE_BATCH_SIZE {
+			batch := make([]string, WRITE_BATCH_SIZE)
+			copy(batch, lines[0:lineIdx])
+			lineCh <- batch
+			lineIdx = 0
+		}
+	}
+
+	if lineIdx > 0 {
+		lineCh <- lines[:lineIdx]
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	close(lineCh)
+}
+
+func reader(results Results, lineCh <-chan []string, doneCh chan<- bool) {
+	for lines := range lineCh {
+		for _, line := range lines {
+			results.record(line)
+		}
+	}
+
+	doneCh <- true
+}
+
+// Spawn 1 batch writer and batch reader goroutine
+func SolutionV2(inputFile string) {
+	file, err := os.Open(inputFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	lineCh := make(chan []string, 1024)
+	go writer(scanner, lineCh)
+
+	results := NewResult()
+	doneCh := make(chan bool)
+	go reader(results, lineCh, doneCh)
+
+	<-doneCh
+
+	fmt.Println(results.process())
+}
