@@ -5,7 +5,6 @@ import (
 	"math"
 	"regexp"
 	"strconv"
-	"strings"
 )
 
 // https://realpython.com/python-rounding/#rounding-half-up
@@ -15,21 +14,21 @@ func RoundHalfUp(n float64, decimals int) float64 {
 }
 
 func ParseLine(line string) (string, float64) {
-	parts := strings.SplitN(line, ";", 2)
-
-	if len(parts) != 2 {
-		log.Panic("Failed to split line", parts)
+	semiIdx := -1
+	for idx, ch := range line {
+		if ch == ';' {
+			semiIdx = idx
+			break
+		}
 	}
 
-	city := parts[0]
-	readingStr := parts[1]
-
+	readingStr := line[semiIdx+1:]
 	reading, err := strconv.ParseFloat(readingStr, 64)
 	if err != nil {
 		log.Panic("Could not parse string into float", readingStr)
 	}
 
-	return city, reading
+	return line[:semiIdx], reading
 }
 
 var linePattern = regexp.MustCompile(`(.+);([-]?\d{1,2}\.\d)`)
